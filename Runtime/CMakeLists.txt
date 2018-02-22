@@ -1,0 +1,1 @@
+add_library(crrt STATIC main.cpp)
