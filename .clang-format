@@ -1,4 +1,4 @@
-BasedOnStyle: Webkit
+BasedOnStyle: LLVM
 IndentWidth: 4
 
 AllowShortCaseLabelsOnASingleLine: true
@@ -7,13 +7,13 @@ AccessModifierOffset: -4
 
 BreakBeforeBraces: Custom
 BraceWrapping:
-    AfterEnum: true
-    AfterStruct: true
-    AfterClass: true
-    AfterFunction: true
-    AfterNamespace: true
-    AfterUnion: true
-    BeforeCatch: true
-    BeforeElse: true
+    AfterEnum: false
+    AfterStruct: false
+    AfterClass: false
+    AfterFunction: false
+    AfterNamespace: false
+    AfterUnion: false
+    BeforeCatch: false
+    BeforeElse: false
 
 CompactNamespaces: false
