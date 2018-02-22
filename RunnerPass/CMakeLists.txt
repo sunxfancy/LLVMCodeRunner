@@ -1,0 +1,1 @@
+add_library(RunnerPass MODULE Pass.cpp)

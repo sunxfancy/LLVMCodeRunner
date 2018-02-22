@@ -1,0 +1,43 @@
+﻿cmake_minimum_required(VERSION 2.8)
+project("LLVMCodeRunner")
+
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/build/conanbuildinfo.cmake)
+    include(${CMAKE_CURRENT_SOURCE_DIR}/build/conanbuildinfo.cmake)
+else()
+    include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+endif()
+conan_basic_setup()
+
+SET(VERSION_MAJOR "0")
+SET(VERSION_MINOR "1")
+SET(VERSION_PATCH "0")
+
+include_directories(src include)
+
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELWITHDEBINFO ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_MINSIZEREL ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+
+add_definitions(-D_GLIBCXX_USE_CXX11_ABI=0) ## It's important for gtest
+## CPP Compiler 
+SET (CMAKE_CXX_FLAGS "-std=c++11")
+SET (CMAKE_CXX_FLAGS_DEBUG "-g")
+SET (CMAKE_CXX_FLAGS_MINSIZEREL "-Os -DNDEBUG")
+SET (CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
+SET (CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
+
+include(${CONAN_LLVM_ROOT}/lib/cmake/llvm/LLVMConfig.cmake)
+
+if(NOT LLVM_INSTALL_PREFIX)
+    message(FATAL_ERROR "ERROR! LLVM NOT FOUND!")
+endif()
+
+add_definitions(${LLVM_DEFINITIONS})
+include_directories(${LLVM_INCLUDE_DIRS})
+
+add_subdirectory(RunnerPass)
+
+add_subdirectory(doc)
+# add_subdirectory(test)

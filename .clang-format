@@ -1,0 +1,19 @@
+BasedOnStyle: Webkit
+IndentWidth: 4
+
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: true
+AccessModifierOffset: -4
+
+BreakBeforeBraces: Custom
+BraceWrapping:
+    AfterEnum: true
+    AfterStruct: true
+    AfterClass: true
+    AfterFunction: true
+    AfterNamespace: true
+    AfterUnion: true
+    BeforeCatch: true
+    BeforeElse: true
+
+CompactNamespaces: false
