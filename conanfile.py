@@ -21,9 +21,9 @@ class LLVMCodeRunnerConan(ConanFile):
     def imports(self):
         self.copy(pattern="*.dll", dst="bin", src="bin")
         self.copy(pattern="*.dylib", dst="bin", src="lib")
-        self.copy(pattern="*.so", dst="bin", src="lib")
+        self.copy(pattern="*.so*", dst="lib", src="lib")
         self.copy(pattern="*", dst="bin", src="bin")
-        
+
     def package(self):
         self.copy("*.h", dst="include", src="include")
         self.copy("*.lib", dst="lib", keep_path=False)
