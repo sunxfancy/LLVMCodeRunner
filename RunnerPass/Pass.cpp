@@ -30,7 +30,7 @@ struct LoopDector : public LoopPass {
 
     bool runOnLoop(Loop *L, LPPassManager &LPM) override {
         errs() << "LoopDector: ";
-        errs().write_escaped(L->) << '\n';
+        errs().write_escaped(L->getName()) << '\n';
         return false;
     }
 }; // end of struct LoopDector
