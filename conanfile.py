@@ -10,7 +10,7 @@ class LLVMCodeRunnerConan(ConanFile):
     default_options = "shared=False", "gtest:shared=False"
     generators = "cmake"
     build_policy = "missing"
-    requires = 'gtest/1.8.0@lasote/stable', 'llvm/5.0.1@sunxfancy/ci', 'Poco/1.8.1@pocoproject/stable'
+    requires = 'gtest/1.8.0@lasote/stable', 'llvm/5.0.2@sunxfancy/stable', 'Poco/1.8.1@pocoproject/stable'
     exports = "*"
     
     def build(self):
