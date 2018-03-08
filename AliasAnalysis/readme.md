@@ -11,7 +11,11 @@ To find out the influence of alias analysis, and compare the different version o
 Alias analysis driven transformations：
 
 * -adce pass, which implements Aggressive Dead Code Elimination uses the AliasAnalysis interface to delete calls to functions that do not have side-effects and are not used.
+Actually after reading the source code, this pass would call alias analysis anymore.
+
 * -licm pass implements various Loop Invariant Code Motion related transformations. It uses the AliasAnalysis interface for several different transformations
+
+
 * -gvn, -memcpyopt, and -dse passes
 These passes use AliasAnalysis information to reason about loads and stores.
 
