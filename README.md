@@ -23,4 +23,28 @@ So the work flow is we first create a test suite and base line version of the pr
 
 
 
+## Build the project
 
+Firstly, we need to install python3 with pip support. To build this project, we need cmake, C++ compiler which support C++11 and any kinds of build system which cmake support. And make sure your path enviroment varible has the pip command, and the place of third party commands.
+
+Second, install Conan package manager and Code Factory build tool. Then setup the package location for conan.
+
+```sh
+pip3 install --user --upgrade conan codefactory
+conan remote add sunxfancy https://api.bintray.com/conan/sunxfancy/common 
+conan remote add ECDK https://api.bintray.com/conan/elite-lang/ECDK 
+```
+
+Third, run build command in the root dir of this project.
+
+```sh
+codef build --release
+```
+
+
+
+## Test the project
+
+We have some test suites in the AliasAnalysis Code
+
+```

@@ -22,7 +22,6 @@ NOINLINE int test2(int a, int b) {
 	return f;
 }
 
-
 int main() {
 	test1(1, 2);
 	test2(2, 3);

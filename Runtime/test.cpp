@@ -1,7 +1,8 @@
 
 #include "crrt.h"
 #include <stdlib.h>
-#include <time.h>
+#include <chrono>
+using namespace std::chrono;
 
 double*
 createMatrix(unsigned int n) {
@@ -16,19 +17,6 @@ createMatrixWithRandomData(unsigned int n) {
         data[i] = (double)(rand() % 9987) / 100.0;
     }
     return data;
-}
-
-double timespec_diff(struct timespec *start, struct timespec *stop)
-{
-    double ans = 0.0;
-    if ((stop->tv_nsec - start->tv_nsec) < 0) {
-        ans = 1000000000.0 * (stop->tv_sec - start->tv_sec - 1);
-        ans += stop->tv_nsec - start->tv_nsec + 1000000000.0;
-    } else {
-        ans = 1000000000.0 * (stop->tv_sec - start->tv_sec);
-        ans += stop->tv_nsec - start->tv_nsec;
-    }
-    return ans;
 }
 
 void
@@ -49,21 +37,24 @@ typedef void (*func_ptr)(double*,double*,double*, unsigned int);
 
 static double *a, *b, *c;
 
-double test_dgemm(void* func_addr) {
+double test_dgemm(void* func_addr, std::ostream& os) {
     dgemm_ijk(a, b, c, 100);
 
-    struct timespec ts1,ts2;
-    clock_gettime(CLOCK_REALTIME, &ts1);
+    auto start = system_clock::now();
     for (int i = 0; i < 30; ++i)
         dgemm_ijk(a, b, c, 100);
-    clock_gettime(CLOCK_REALTIME, &ts2);
-    double time_base = timespec_diff(&ts1, &ts2);
+    auto end = system_clock::now();
+    duration<double> elapsed_seconds = end-start;
+    double time_base = duration_cast<milliseconds>(elapsed_seconds).count();
 
-    clock_gettime(CLOCK_REALTIME, &ts1);
+    start = system_clock::now();
     for (int i = 0; i < 30; ++i)
         ((func_ptr)func_addr)(a, b, c, 100);
-    clock_gettime(CLOCK_REALTIME, &ts2);
-    double time_real = timespec_diff(&ts1, &ts2);
+    end = system_clock::now();
+    elapsed_seconds = end-start;
+    double time_real = duration_cast<milliseconds>(elapsed_seconds).count();
+    os << "time base: " << time_base << " ms" << std::endl;
+    os << "time real: " << time_real << " ms" << std::endl;
     return time_base/time_real;
 }
 

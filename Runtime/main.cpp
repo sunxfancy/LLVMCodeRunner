@@ -93,9 +93,9 @@ public:
     }
 
     // here we test and get the speed up
-    double RunTest(string func_name, void *func_addr) {
+    double RunTest(string func_name, void *func_addr, std::ostream& os) {
         auto p = testptr_map[func_name];
-        return p(func_addr);
+        return p(func_addr, os);
     }
 };
 
@@ -110,14 +110,24 @@ public:
         response.setChunkedTransferEncoding(true);
         response.setContentType("text/html");
         std::ostream &ostr = response.send();
-
+        std::stringstream sstr;
         if (request.getURI() == "/function") {
             string name;
             request.stream() >> name;
             stringstream ss;
             ss << request.stream().rdbuf();
             void *f = runner.LoadFunction(name, ss.str());
-            ostr << runner.RunTest(name, f) << endl;
+            ostr << runner.RunTest(name, f, sstr) << endl;
+            ostr << sstr.rdbuf() << endl;
+        } else if (request.getURI() == "/all") {
+            for (auto p : runner.testptr_map) {
+                string name = p.first;
+                stringstream ss;
+                ss << request.stream().rdbuf();
+                void *f = runner.LoadFunction(name, ss.str());
+                ostr << name << " : " << runner.RunTest(name, f, sstr) << endl;
+                ostr << sstr.rdbuf() << endl; 
+            }
         }
     }
 };

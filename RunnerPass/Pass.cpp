@@ -1,42 +1,49 @@
 #include "llvm/Pass.h"
 #include "llvm/Analysis/LoopPass.h"
-#include "llvm/IR/Function.h"
+#include "llvm/IR/Module.h"
 #include "llvm/Support/raw_ostream.h"
+#include "Poco/Net/HTTPClientSession.h"
+#include "Poco/Net/HTTPRequest.h"
+#include "Poco/Net/HTTPResponse.h"
+#include "Poco/StreamCopier.h"
+#include "Poco/URI.h"
+#include <iostream>
 
 using namespace llvm;
+using namespace Poco;
+using namespace Poco::Net;
 
 namespace {
-struct Hello : public FunctionPass {
+struct CodeRunnerPass : public ModulePass {
     static char ID;
-    Hello() : FunctionPass(ID) {}
+    CodeRunnerPass() : ModulePass(ID) {}
 
-    bool runOnFunction(Function &F) override {
-        errs() << "Hello: ";
-        errs().write_escaped(F.getName()) << '\n';
+    bool runOnModule(Module &M) override {
+        errs() << "CodeRunnerPass: ";
+        std::string str;
+        raw_string_ostream ss(str);
+        M.print(ss, nullptr);
+        sendMsg(ss.str());
         return false;
     }
-}; // end of struct Hello
+
+    void sendMsg(const std::string& module, std::string addr = "http://127.0.0.1:12306") {
+        URI uri(addr);
+        HTTPClientSession session(uri.getHost(), uri.getPort());
+        HTTPRequest request(HTTPRequest::HTTP_POST, "/all");
+        request.setContentLength(module.length());
+        std::ostream& os = session.sendRequest(request);
+        os << module << std::flush;
+        HTTPResponse response;
+        std::istream& rs = session.receiveResponse(response);
+        StreamCopier::copyStream(rs, std::cerr);
+    }
+
+}; // end of struct CodeRunnerPass
 } // end of anonymous namespace
 
-char Hello::ID = 0;
-static RegisterPass<Hello> X("hello", "Hello World Pass",
+char CodeRunnerPass::ID = 0;
+static RegisterPass<CodeRunnerPass> X("cr", "Code Runner Pass",
                              false /* Only looks at CFG */,
                              false /* Analysis Pass */);
 
-namespace {
-struct LoopDector : public LoopPass {
-    static char ID;
-    LoopDector() : LoopPass(ID) {}
-
-    bool runOnLoop(Loop *L, LPPassManager &LPM) override {
-        errs() << "LoopDector: ";
-        errs().write_escaped(L->getName()) << '\n';
-        return false;
-    }
-}; // end of struct LoopDector
-} // end of anonymous namespace
-
-char LoopDector::ID = 1;
-static RegisterPass<LoopDector> Y("loop-detector", "LoopDector Pass",
-                                  false /* Only looks at CFG */,
-                                  false /* Analysis Pass */);

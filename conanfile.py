@@ -7,7 +7,7 @@ class LLVMCodeRunnerConan(ConanFile):
     url = "https://github.com/sunxfancy/LLVMCodeRunner"
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False]}
-    default_options = "shared=False", "gtest:shared=False"
+    default_options = "shared=False", "gtest:shared=False", "Poco:shared=True"
     generators = "cmake"
     build_policy = "missing"
     requires = 'gtest/1.8.0@sunxfancy/stable', 'llvm/5.0.2@sunxfancy/stable', 'Poco/1.8.1@pocoproject/stable'
