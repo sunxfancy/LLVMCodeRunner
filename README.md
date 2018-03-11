@@ -45,6 +45,4 @@ codef build --release
 
 ## Test the project
 
-We have some test suites in the AliasAnalysis Code
-
-```
+We have some test suites in the AliasAnalysis Directory
