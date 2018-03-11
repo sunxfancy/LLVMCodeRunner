@@ -10,7 +10,7 @@ It's really time consuming. Even thought you just change one line of your final 
 
 So usually, it's impossible to run real project as an optimition test suite. 
 
-This code runner is to solve this problem. It's designed to be easily called in a LLVM pass. And the real runner also could be disturbed on the internet. So it's possible to send the test command to lots of different platfroms (if there is no architecture difference). 
+This code runner is to solve this problem. It's designed to be easily called in an LLVM pass. And the real runner also could be disturbed on the internet. So it's possible to send the test command to lots of different platfroms (if there is no architecture difference). 
 
 With this tool, you can test your code on any kinds of platform without redeploy your new version of code. You can also run test suite on your android tablet or iPhone. 
 

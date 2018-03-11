@@ -1,4 +1,3 @@
-#include <stdio.h>
 #define N 1000
 double data[N][N];
 
@@ -8,9 +7,4 @@ void mul(double a[N][N]) {
             a[j][i] = a[j][i] * 0.01;
         }
     }
-}
-
-int main() {
-    mul(data);
-    return 0;
 }

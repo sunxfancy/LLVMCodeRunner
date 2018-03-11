@@ -7,10 +7,10 @@ adce: main.ll
 	../build/bin/opt main.ll -adce --debug-pass=Structure -disable-output
 
 licm:
-	clang -O0 -std=c99 loop.c -S -emit-llvm -o loop.ll
+	clang++ -O0 -std=c++11 loop.cpp -S -emit-llvm -o loop.ll
 	../build/bin/opt loop.ll -print-alias-sets --debug-pass=Structure -disable-output
 	../build/bin/opt loop.ll -stats -licm --debug-pass=Structure -S -o loop.licm.ll
-	../build/bin/opt loop.ll -stats -disable-basicaa -licm --debug-pass=Structure -S -o loop.licm-noaa.ll
+	../build/bin/opt loop.ll -stats -disable-basicaa -print-alias-sets -licm --debug-pass=Structure -S -o loop.licm-noaa.ll
 
 gvn: main.ll
 	../build/bin/opt main.ll -print-alias-sets --debug-pass=Structure -disable-output
@@ -21,7 +21,12 @@ test:
 	../build/bin/llvm-as < /dev/null | ../build/bin/opt -O1 -disable-output -debug-pass=Arguments
 
 main.ll:
-	clang -O0 -std=c99 main.c -S -emit-llvm -o main.ll
+	clang++ -O0 -std=c++11 main.cpp -S -emit-llvm -o main.ll
 
 main.O1.ll:
-	clang -O3 -std=c99 main.c -S -emit-llvm -o main.O1.ll
+	clang++ -O3 -std=c++11 main.cpp -S -emit-llvm -o main.O1.ll
+
+clear:
+	rm *.ll 
+
+.PHONY: all adec licm gvn clear 

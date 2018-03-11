@@ -1,7 +1,6 @@
-add_library(crrt SHARED main.cpp)
-
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-add_executable(crrt_run test.cpp)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR} ../Runtime)
+add_executable(loop loop.cpp loop_test.cpp)
+add_executable(gvn gvn.cpp gvn_test.cpp)
 
 llvm_map_components_to_libnames(LLVM_LIBS
     asmparser support core irreader executionengine interpreter runtimedyld
