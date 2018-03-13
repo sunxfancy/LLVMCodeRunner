@@ -1,5 +1,4 @@
 #define N 1000
-double data[N][N];
 
 void mul(double a[N][N]) {
     for (int i = 0; i < N; ++i) {

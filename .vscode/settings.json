@@ -35,6 +35,7 @@
         "atomic": "cpp",
         "ctime": "cpp",
         "ratio": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "loop.c": "cpp"
     }
 }

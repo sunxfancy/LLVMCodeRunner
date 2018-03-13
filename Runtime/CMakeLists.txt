@@ -1,5 +1,6 @@
 add_library(crrt SHARED main.cpp)
 
+SET_PROPERTY( SOURCE test.cpp PROPERTY COMPILE_FLAGS "-O0 -DNDEBUG")
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(crrt_run test.cpp)
 

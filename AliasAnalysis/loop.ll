@@ -1,11 +1,9 @@
-; ModuleID = 'loop.cpp'
+; ModuleID = 'loop.c'
 target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-@data = global [1000 x [1000 x double]] zeroinitializer, align 16
-
 ; Function Attrs: nounwind uwtable
-define void @_Z3mulPA1000_d([1000 x double]* %a) #0 {
+define void @mul([1000 x double]* %a) #0 {
   %1 = alloca [1000 x double]*, align 8
   %i = alloca i32, align 4
   %j = alloca i32, align 4

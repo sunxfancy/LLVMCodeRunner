@@ -1,0 +1,52 @@
+../build/bin/opt loop.ll -load ../build/bin/libRunnerPass.so -cr -licm -cr -disable-output
+CodeRunnerPass: mul : 1.00496
+time base: 608 ms
+time real: 605 ms
+
+CodeRunnerPass: mul : 5.84466
+time base: 602 ms
+time real: 103 ms
+
+../build/bin/opt loop.ll -load ../build/bin/libRunnerPass.so -disable-basicaa -cr -licm -cr -disable-output
+CodeRunnerPass: mul : 0.989916
+time base: 589 ms
+time real: 595 ms
+
+CodeRunnerPass: mul : 1.02178
+time base: 610 ms
+time real: 597 ms
+
+
+../build/bin/opt main.ll -load ../build/bin/libRunnerPass.so -cr -gvn -cr -disable-output
+CodeRunnerPass: test1 : 1.09859
+time base: 780 ms
+time real: 710 ms
+
+test2 : 1.14194
+time base: 893 ms
+time real: 782 ms
+
+CodeRunnerPass: test1 : 1.12337
+time base: 774 ms
+time real: 689 ms
+
+test2 : 1.09553
+time base: 883 ms
+time real: 806 ms
+
+../build/bin/opt main.ll -load ../build/bin/libRunnerPass.so -disable-basicaa -cr -gvn -cr -disable-output
+CodeRunnerPass: test1 : 1.13442
+time base: 768 ms
+time real: 677 ms
+
+test2 : 1.13683
+time base: 889 ms
+time real: 782 ms
+
+CodeRunnerPass: test1 : 1.09943
+time base: 774 ms
+time real: 704 ms
+
+test2 : 1.14395
+time base: 898 ms
+time real: 785 ms

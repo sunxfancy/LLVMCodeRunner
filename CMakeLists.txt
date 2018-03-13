@@ -45,5 +45,7 @@ include_directories(${LLVM_INCLUDE_DIRS})
 
 add_subdirectory(RunnerPass)
 add_subdirectory(Runtime)
+add_subdirectory(AliasAnalysis)
+
 add_subdirectory(doc)
 # add_subdirectory(test)
