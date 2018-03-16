@@ -45,4 +45,62 @@ codef build --release
 
 ## Test the project
 
-We have some test suites in the AliasAnalysis Directory
+We have some test suites in the AliasAnalysis Directory. For generating IR file, you also need clang installed.
+
+To test the correctness of code runner:
+
+```sh
+cd AsmGen/
+make            # this will create a main.bc file in dir `build/bin`
+cd ../build/bin
+./crrt_run
+```
+
+Those commands will create a server of code runner. Then, please use another shell to test the pass.
+
+```sh
+cd build/bin
+./opt main.bc -load ./libRunnerPass.so -cr -licm -cr -disable-output
+```
+
+If the project build correctly, it will show you the time consume before and after the -licm pass.
+
+```sh
+CodeRunnerPass: dgemm_ijk : 1
+time base: 88 ms
+time real: 88 ms
+
+CodeRunnerPass: dgemm_ijk : 4.19048
+time base: 88 ms
+time real: 21 ms
+```
+
+
+To test the Alias Analysis pass, please create the IR file first:
+
+```sh
+cd AliasAnalysis/
+make
+```
+
+To test the speed, please use another shell to run the server:
+```sh
+cd build/bin
+./loop
+```
+
+And use the old shell to test the speed:
+```sh
+make test-licm
+```
+
+Before test the GVN, please first use Ctrl+C shutdown the server.
+```sh
+cd build/bin
+./gvn
+```
+
+And use the old shell to run the test:
+```sh
+make test-gvn
+```
